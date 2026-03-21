@@ -1,0 +1,20 @@
+autoInstallPeers: true
+
+catalogMode: prefer
+
+cleanupUnusedCatalogs: true
+
+ignoreWorkspaceRootCheck: true
+
+shamefullyHoist: true
+
+shellEmulator: true
+
+preferWorkspacePackages: true
+
+linkWorkspacePackages: true
+
+packages:
+  - packages/**
+
+strictPeerDependencies: false

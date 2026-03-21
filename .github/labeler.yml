@@ -1,0 +1,23 @@
+# See https://github.com/actions/labeler
+
+# Core
+'pkg: core':
+  - packages/core/**
+
+# Plugin
+'pkg: plugin':
+  - packages/plugin/**
+
+# Workbox
+
+# Other categories
+'🚨 action':
+  - .github/workflows/**
+  - .github/actions/**
+
+'docs pr':
+  - README.md
+  - packages/**/README.md
+
+'changeset':
+  - .changeset/**

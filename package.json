@@ -1,0 +1,24 @@
+{
+  "name": "quini-monorepo",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.32.1",
+  "description": "Testing GH stuff",
+  "author": "userquin <userquin@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/userquin/quini-monorepo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/userquin/quini-monorepo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/userquin/quini-monorepo/issues"
+  },
+  "scripts": {
+    "version": "changeset version && pnpm install --no-frozen-lockfile"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.30.0"
+  }
+}
