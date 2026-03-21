@@ -16,6 +16,9 @@
     "url": "https://github.com/userquin/quini-monorepo/issues"
   },
   "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "pnpm lint --fix",
+    "test:typecheck": "pnpm -r --filter=\"./packages/**/\" run test:typecheck",
     "build": "pnpm -r --filter=\"./packages/**/\" run build",
     "version": "changeset version && pnpm install --no-frozen-lockfile"
   },

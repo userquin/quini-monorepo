@@ -55,9 +55,21 @@ jobs:
           # Forces the use of OIDC/Provenance instead of the classic token
           NPM_TOKEN: '' # https://github.com/changesets/changesets/issues/1152#issuecomment-3190884868
 
-      # If the previous step published something (i.e. you merged the PR), we generate the GitHub release
       - name: Generate Changelog with Changelogithub
         if: steps.changesets.outputs.published == 'true'
-        run: pnpx changelogithub
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo '${{ steps.changesets.outputs.publishedPackages }}' \
+            | jq -r '.[] | "\(.name)@\(.version)"' \
+            | while read tag; do
+                echo "Generating changelog for $tag"
+                pnpx changelogithub --tag "$tag" || true
+              done
+
+      # If the previous step published something (i.e. you merged the PR), we generate the GitHub release
+      #- name: Generate Changelog with Changelogithub
+      #  if: steps.changesets.outputs.published == 'true'
+      #  run: pnpx changelogithub
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -19,6 +19,7 @@
     "sourceMap": true,
     "esModuleInterop": false,
     "isolatedModules": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noEmit": true
   }
 }
