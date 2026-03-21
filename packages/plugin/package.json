@@ -17,7 +17,8 @@
     "test:typecheck": "tsc --noEmit"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "dependencies": {
     "@quini/core": "workspace:*"
