@@ -16,10 +16,10 @@
     ],
     "strict": true,
     "declaration": true,
+    "noEmit": true,
     "sourceMap": true,
     "esModuleInterop": false,
     "isolatedModules": true,
-    "skipLibCheck": true,
-    "noEmit": true
+    "skipLibCheck": true
   }
 }

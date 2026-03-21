@@ -29,7 +29,7 @@ jobs:
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: 24.13.1
-          cache: 'pnpm'
+          cache: pnpm
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
@@ -48,8 +48,8 @@ jobs:
           # Command to publish the packages
           publish: pnpm exec changeset publish
 
-          commit: "[ci] release"
-          title: "[ci] release"
+          commit: '[ci] release'
+          title: '[ci] release'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Forces the use of OIDC/Provenance instead of the classic token
@@ -68,7 +68,7 @@ jobs:
               done
 
       # If the previous step published something (i.e. you merged the PR), we generate the GitHub release
-      #- name: Generate Changelog with Changelogithub
+      # - name: Generate Changelog with Changelogithub
       #  if: steps.changesets.outputs.published == 'true'
       #  run: pnpx changelogithub
       #  env:
