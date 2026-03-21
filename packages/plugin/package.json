@@ -2,6 +2,17 @@
   "name": "@quini/plugin",
   "version": "0.1.0",
   "type": "module",
+  "author": "userquin <userquin@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/userquin/quini-monorepo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/userquin/quini-monorepo.git",
+    "directory": "packages/plugin"
+  },
+  "bugs": {
+    "url": "https://github.com/userquin/quini-monorepo/issues"
+  },
   "exports": {
     ".": "./dist/index.mjs",
     "./package.json": "./package.json"
