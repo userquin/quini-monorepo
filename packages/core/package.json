@@ -2,6 +2,17 @@
   "name": "@quini/core",
   "version": "0.1.0",
   "type": "module",
+  "author": "userquin <userquin@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/userquin/quini-monorepo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/userquin/quini-monorepo.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/userquin/quini-monorepo/issues"
+  },
   "sideEffects": false,
   "exports": {
     ".": "./dist/index.mjs",
