@@ -24,3 +24,4 @@ dist-ssr
 *.md
 !README.md
 !.github/*.md
+!.changeset/*.md
