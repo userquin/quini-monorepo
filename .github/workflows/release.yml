@@ -62,9 +62,46 @@ jobs:
         run: |
           echo '${{ steps.changesets.outputs.publishedPackages }}' \
             | jq -r '.[] | "\(.name)@\(.version)"' \
-            | while read tag; do
-                echo "Generating changelog for $tag"
-                pnpx changelogithub --tag "$tag" || true
+            | while read new_tag; do
+                pkg_name=$(echo "$new_tag" | sed 's/@[^@]*$//')
+                version=$(echo "$new_tag" | sed 's/.*@//')
+
+                # Detects the new tag channel
+                if echo "$version" | grep -q '\-alpha'; then
+                  channel="alpha"
+                elif echo "$version" | grep -q '\-beta'; then
+                  channel="beta"
+                else
+                  channel="stable"
+                fi
+
+                # Filter tags by channel
+                if [ "$channel" = "stable" ]; then
+                  filter_cmd="grep -v '\-alpha\|\-beta'"
+                elif [ "$channel" = "alpha" ]; then
+                  filter_cmd="grep '\-alpha'"
+                else
+                  filter_cmd="grep '\-beta'"
+                fi
+
+                prev_tag=$(git tag \
+                  | grep "^${pkg_name}@" \
+                  | sed "s|^${pkg_name}@||" \
+                  | eval "$filter_cmd" \
+                  | sort -rV \
+                  | sed -n '2p' \
+                  | xargs -I{} echo "${pkg_name}@{}")
+
+                echo "Changelog for $new_tag | channel: $channel (from: ${prev_tag:-'initial release'})"
+
+                draft_flag=""
+                [ "$channel" != "stable" ] && draft_flag="--draft"
+
+                if [ -n "$prev_tag" ]; then
+                  pnpx changelogithub --from "$prev_tag" --to "$new_tag" $draft_flag || true
+                else
+                  pnpx changelogithub --to "$new_tag" $draft_flag || true
+                fi
               done
 
       # If the previous step published something (i.e. you merged the PR), we generate the GitHub release
