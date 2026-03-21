@@ -16,9 +16,17 @@
     "url": "https://github.com/userquin/quini-monorepo/issues"
   },
   "scripts": {
+    "build": "pnpm -r --filter=\"./packages/**/\" run build",
     "version": "changeset version && pnpm install --no-frozen-lockfile"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.30.0"
+    "@antfu/eslint-config": "catalog:",
+    "@arethetypeswrong/cli": "catalog:",
+    "@changesets/cli": "catalog:",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "publint": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:"
   }
 }
