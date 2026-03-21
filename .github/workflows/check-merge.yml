@@ -22,7 +22,7 @@ jobs:
         id: blocked
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
         env:
-          issue_number:  ${{ github.event.number }}
+          issue_number: ${{ github.event.number }}
         with:
           script: |
             const { data: reviews } = await github.rest.pulls.listReviews({

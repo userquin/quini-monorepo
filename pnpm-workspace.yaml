@@ -1,17 +1,4 @@
-packages:
-  - packages/**
-
 autoInstallPeers: true
-
-catalog:
-  '@antfu/eslint-config': ^7.7.3
-  '@arethetypeswrong/cli': ^0.18.2
-  '@changesets/cli': ^2.30.0
-  '@types/node': ^25.5.0
-  eslint: ^10.1.0
-  publint: ^0.3.18
-  tsdown: ^0.21.4
-  typescript: ~5.9.3
 
 catalogMode: prefer
 
@@ -26,5 +13,20 @@ preferWorkspacePackages: true
 shamefullyHoist: true
 
 shellEmulator: true
+
+trustPolicy: no-downgrade
+
+packages:
+  - packages/**
+
+catalog:
+  '@antfu/eslint-config': ^7.7.3
+  '@arethetypeswrong/cli': ^0.18.2
+  '@changesets/cli': ^2.30.0
+  '@types/node': ^25.5.0
+  eslint: ^10.1.0
+  publint: ^0.3.18
+  tsdown: ^0.21.4
+  typescript: ~5.9.3
 
 strictPeerDependencies: false

@@ -11,13 +11,13 @@
 # Workbox
 
 # Other categories
-'🚨 action':
+🚨 action:
   - .github/workflows/**
   - .github/actions/**
 
-'docs pr':
+docs pr:
   - README.md
   - packages/**/README.md
 
-'changeset':
+changeset:
   - .changeset/**

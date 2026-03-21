@@ -16,6 +16,7 @@
     ],
     "strict": true,
     "declaration": true,
+    "noEmit": true,
     "sourceMap": true,
     "esModuleInterop": false,
     "isolatedModules": true,
