@@ -66,6 +66,8 @@ async function sendRelease(config, content) {
 // eslint-disable-next-line node/prefer-global/process
 const packages = JSON.parse(process.env.PUBLISHED_PACKAGES)
 
+const date = new Date().toISOString().split('T')[0] // 2026-03-22
+
 // NOTE: DON'T use `await Promise.all()` here, we'll get logs mixed in the terminal, keep this logic sequential
 for (const { name, version } of packages) {
   const newTag = `${name}@${version}`
@@ -113,5 +115,5 @@ for (const { name, version } of packages) {
   console.log()
   console.log(dim('--------------'))
 
-  await sendRelease(config, output)
+  await sendRelease(config, `## ${version} (${date})\n${output}`)
 }
