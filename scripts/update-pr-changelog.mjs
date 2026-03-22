@@ -91,7 +91,7 @@ async function run() {
 
   const section = [
     MARKER_START,
-    '### ⏳ Pending commits',
+    '### ⏳ Unreleased changes',
     commitsBody,
     contributorsBody,
     MARKER_END,
