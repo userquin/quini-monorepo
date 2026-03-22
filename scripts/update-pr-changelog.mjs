@@ -62,19 +62,21 @@ async function run() {
 
   // Resolve distinct contributor logins — one API call per unique email
   const seenEmails = new Set()
-  const contributors = []
+  const contributorsList = [] // "- Full Name (@login)"
+  const contributorsAvatars = [] // "[![login](...)](...)
 
   for (const c of commits) {
     if (!seenEmails.has(c.author_email)) {
       seenEmails.add(c.author_email)
       const login = await resolveLogin(c.hash)
       if (login) {
-        contributors.push(
+        contributorsList.push(`- ${c.author_name} ( @${login} )`)
+        contributorsAvatars.push(
           `[![${login}](https://github.com/${login}.png?size=32)](https://github.com/${login})`,
         )
       }
       else {
-        contributors.push(`- ${c.author_name}`)
+        contributorsList.push(`- ${c.author_name}`)
       }
     }
   }
@@ -83,8 +85,8 @@ async function run() {
     .map(c => `- ${c.message.split('\n')[0]} (${c.hash.substring(0, 7)})`)
     .join('\n')
 
-  const contributorsBody = contributors.length > 0
-    ? `\n### 💖 Contributors\n${contributors.join(' ')}`
+  const contributorsBody = contributorsList.length > 0
+    ? `\n### 💖 Contributors\n${contributorsList.join('\n')}\n${contributorsAvatars.join(' ')}`
     : ''
 
   const section = [
@@ -119,7 +121,7 @@ async function run() {
   })
 
   if (updateRes.ok)
-    console.log(`Updated PR #${prNumber} with ${commits.length} commits and ${contributors.length} contributors.`)
+    console.log(`Updated PR #${prNumber} with ${commits.length} commits and ${seenEmails.size} contributors.`)
   else
     console.error(`Failed to update PR: ${updateRes.statusText}`)
 }
