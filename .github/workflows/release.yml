@@ -69,3 +69,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISHED_PACKAGES: ${{ steps.changesets.outputs.publishedPackages }}
         run: node scripts/changelog.mjs
+
+      - name: Append Changelog to PR
+        if: steps.changesets.outputs.published != 'true' && steps.changesets.outputs.pullRequestNumber != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.changesets.outputs.pullRequestNumber }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node scripts/update-pr-changelog.mjs
