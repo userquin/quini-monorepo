@@ -35,6 +35,13 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
+      # The crucial step: build the code BEFORE publishing.
+      # You can have a root 'build' script that calls children (pnpm -r build)
+      # or rely on each package having a "prepublishOnly": "pnpm build" script.
+      # We force it here explicitly to ensure the dist/ directories exist.
+      - name: Build Packages
+        run: pnpm run build
+
       # This step evaluates whether to open a PR or publish
       - name: Create Release Pull Request or Publish
         id: changesets
