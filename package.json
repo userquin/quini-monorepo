@@ -27,6 +27,7 @@
     "@arethetypeswrong/cli": "catalog:",
     "@changesets/cli": "catalog:",
     "@types/node": "catalog:",
+    "ansis": "catalog:",
     "changelogithub": "catalog:",
     "eslint": "catalog:",
     "publint": "catalog:",

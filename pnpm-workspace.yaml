@@ -1,5 +1,4 @@
 autoInstallPeers: true
-
 catalogMode: prefer
 
 cleanupUnusedCatalogs: true
@@ -24,7 +23,10 @@ catalog:
   '@arethetypeswrong/cli': ^0.18.2
   '@changesets/cli': ^2.30.0
   '@types/node': ^25.5.0
-  changelogithub: ^14.0.0
+  ansis: ^4.2.0
+  # when changing changelogithub remember to change scripts/changelog.mjs as well
+  # changelogithub doesn't export version nor package.json
+  changelogithub: 14.0.0
   eslint: ^10.1.0
   publint: ^0.3.18
   semver: ^7.7.4
