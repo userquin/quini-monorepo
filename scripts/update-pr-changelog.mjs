@@ -121,7 +121,7 @@ async function run() {
   })
 
   if (updateRes.ok)
-    console.log(`Updated PR #${prNumber} with ${commits.length} commits and ${contributors.length} contributors.`)
+    console.log(`Updated PR #${prNumber} with ${commits.length} commits and ${seenEmails.size} contributors.`)
   else
     console.error(`Failed to update PR: ${updateRes.statusText}`)
 }
