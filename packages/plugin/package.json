@@ -1,7 +1,7 @@
 {
   "name": "@quini/plugin",
   "type": "module",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "author": "userquin <userquin@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/userquin/quini-monorepo#readme",
