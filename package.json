@@ -27,8 +27,11 @@
     "@arethetypeswrong/cli": "catalog:",
     "@changesets/cli": "catalog:",
     "@types/node": "catalog:",
+    "changelogithub": "catalog:",
     "eslint": "catalog:",
     "publint": "catalog:",
+    "semver": "catalog:",
+    "simple-git": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:"
   }
