@@ -1,28 +1,40 @@
 import { blue, bold, cyan, dim } from 'ansis'
-import { generate, getGitTags, isPrerelease, sendRelease } from 'changelogithub'
+import { generate, isPrerelease, sendRelease } from 'changelogithub'
 import semver from 'semver'
+import { simpleGit } from 'simple-git'
 
+// NOTE: keep in sync with pnpm catalog version for changelogithub
 const changelogihubVersion = '14.0.0'
+
+const git = simpleGit()
 
 // eslint-disable-next-line node/prefer-global/process
 const packages = JSON.parse(process.env.PUBLISHED_PACKAGES)
 
+// NOTE: DON'T use `await Promise.all()` here, we'll get logs mixed in the terminal, keep this logic sequential
 for (const { name, version } of packages) {
   const newTag = `${name}@${version}`
   const prerelease = isPrerelease(version)
   const channel = semver.prerelease(version)?.[0] ?? 'stable'
 
-  const allTags = await getGitTags()
+  // Fetch only the tags for this specific package, sorted by semver descending.
+  // Using --list with a pattern and --sort=-version:refname avoids fetching all
+  // tags across the entire repo, which can be very large in a monorepo over time.
+  const { all: allTags } = await git.tags([
+    '--list',
+    `${name}@*`,
+    '--sort=-version:refname',
+  ])
 
+  // Exclude current version and filter by channel (stable, alpha, beta)
+  // to avoid mixing release lines, then pick the most recent one.
   const prevTag = allTags
-    .filter(t => t.startsWith(`${name}@`))
     .map(t => t.replace(`${name}@`, ''))
     .filter((v) => {
       const pre = semver.prerelease(v)?.[0] ?? 'stable'
-      return pre === channel
+      return v !== version && pre === channel
     })
-    .sort((a, b) => semver.rcompare(a, b))
-    .at(1)
+    .at(0)
 
   const prevFullTag = prevTag ? `${name}@${prevTag}` : undefined
 
