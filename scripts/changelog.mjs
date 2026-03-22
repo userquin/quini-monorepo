@@ -1,5 +1,5 @@
-import { blue, bold, cyan, dim } from 'ansis'
-import { generate, isPrerelease, sendRelease } from 'changelogithub'
+import { blue, bold, cyan, dim, green } from 'ansis'
+import { generate, isPrerelease } from 'changelogithub'
 import semver from 'semver'
 import { simpleGit } from 'simple-git'
 
@@ -7,6 +7,61 @@ import { simpleGit } from 'simple-git'
 const changelogihubVersion = '14.0.0'
 
 const git = simpleGit()
+
+/**
+ * `changelogithub` sendRelease replacement to send `make_latest` field for stable releases,
+ * and avoid marking pre-releases as latest.
+ * @param config {import('changelogithub').ChangelogOptions}
+ * @param content {string}
+ * @return {Promise<{html_url: string, id: number}>}
+ */
+async function sendRelease(config, content) {
+  const headers = {
+    'Authorization': `Bearer ${config.token}`,
+    'Content-Type': 'application/json',
+  }
+
+  const baseUrl = `https://${config.baseUrlApi}/repos/${config.releaseRepo}/releases`
+
+  let url = baseUrl
+  let method = 'POST'
+
+  // Check if the release already exists (e.g. re-run of the workflow)
+  try {
+    const existing = await fetch(`${baseUrl}/tags/${config.to}`, { headers })
+    const data = await existing.json()
+    if (data.url) {
+      url = data.url
+      method = 'PATCH'
+    }
+  }
+  catch {
+    // Release does not exist yet, proceed with POST
+  }
+
+  const body = {
+    body: content,
+    draft: config.draft || false,
+    name: config.name || config.to,
+    prerelease: config.prerelease,
+    tag_name: config.to,
+    // Only mark stable releases as latest, never pre-releases
+    make_latest: config.prerelease ? 'false' : 'true',
+  }
+
+  console.log(cyan(method === 'POST' ? 'Creating release notes...' : 'Updating release notes...'))
+
+  const res = await fetch(url, {
+    method,
+    headers,
+    body: JSON.stringify(body),
+  })
+
+  /** @type {{html_url: string, id: number}} */
+  const release = await res.json()
+  console.log(green(`Released on ${release.html_url}`))
+  return release
+}
 
 // eslint-disable-next-line node/prefer-global/process
 const packages = JSON.parse(process.env.PUBLISHED_PACKAGES)
