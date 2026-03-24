@@ -11,6 +11,10 @@ const MARKER_END = '<!-- changelog-end -->'
 const MARKER_REGEX = /<!-- changelog-start -->[\s\S]*<!-- changelog-end -->/
 const LAST_TAG_REGEX = /tag:\s*([^,)]+)/
 
+/**
+ * @param sha {string}
+ * @return {Promise<NavigatorLogin|string|null>}
+ */
 async function resolveLogin(sha) {
   try {
     const res = await fetch(`https://api.github.com/repos/${repo}/commits/${sha}`, {
@@ -61,8 +65,11 @@ async function run() {
   console.log(`Found ${commits.length} commits since ${lastTag ?? 'beginning'}`)
 
   // Resolve distinct contributor logins — one API call per unique email
+  /** @type {Set<string>} */
   const seenEmails = new Set()
+  /** @type {string[]} */
   const contributorsList = [] // "- Full Name (@login)"
+  /** @type {string[]} */
   const contributorsAvatars = [] // "[![login](...)](...)
 
   for (const c of commits) {

@@ -113,7 +113,5 @@ for (const { name, version } of packages) {
   console.log()
   console.log(dim('--------------'))
 
-  const date = new Date().toISOString()
-
-  await sendRelease(config, `## Release date ${date}\n\n${output}`)
+  await sendRelease(config, output)
 }
