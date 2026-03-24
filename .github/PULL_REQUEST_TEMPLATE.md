@@ -5,8 +5,8 @@
 <!-- Before/after screenshots can help as well. -->
 -
 
-> **Important:** Don't forget a changeset! Run `pnpm exec changeset`.
-> If this change does NOT require a release, you can create an empty changeset or select "no bump" if prompted, but a changeset is highly encouraged for tracking.
+> **Important:** Don't forget a changeset! Run `pnpm changeset` and follow the prompts.
+> If this change does NOT require a release, you can create an empty changeset running `pnpm changeset --empty`.
 
 ## Testing
 
